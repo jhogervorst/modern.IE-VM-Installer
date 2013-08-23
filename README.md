@@ -15,8 +15,7 @@ Usage
 Screenshots
 -----------
 
-![List of VMs](http://cl.ly/image/093O201q3v2h/VM-list.png)
-![Installation progress](http://cl.ly/image/09020V2c431b/Installation-progress.png)
+![modern.IE VM Installer](http://cl.ly/image/2Z2d1O0R0L0z/modern.IE-VM-Installer.png)
 
 Compatibility
 -------------
