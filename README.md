@@ -7,7 +7,7 @@ Usage
 -----
 
 1. Make sure [VirtualBox](https://www.virtualbox.org) is installed on your Mac.
-2. [Download]() and extract the ZIP file containing the application. Double click the extracted application.
+2. [Download](https://github.com/jhogervorst/modern.IE-VM-Installer/releases/download/v0.1/modern.IE.VM.Installer.app.zip) and extract the ZIP file containing the application. Double click the extracted application.
 3. Choose the VM you want to install and click "OK".
 4. Wait while the required files are downloaded and the VM is imported into VirtualBox.
 5. You're done; you can now run the VM from VirtualBox!
