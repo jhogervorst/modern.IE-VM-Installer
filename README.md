@@ -1,7 +1,7 @@
 modern.IE VM Installer v0.1
 ===========================
 
-AppleScript to install modern.IE VMs with one click in VirtualBox for Mac.
+AppleScript to install [modern.IE VMs](http://www.modern.ie/virtualization-tools) with one click in VirtualBox for Mac.
 
 Usage
 -----
