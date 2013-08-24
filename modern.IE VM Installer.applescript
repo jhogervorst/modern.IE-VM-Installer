@@ -1,8 +1,12 @@
--- modern.IE VM Installer v0.1
+-- modern.IE VM Installer v0.1.1
 -- AppleScript to install modern.IE VMs with one click in VirtualBox for Mac.
 --
 -- Copyright © 2013 Jonathan Hogervorst. All rights reserved.
 -- This code is licensed under MIT license. See LICENSE for details.
+
+global scriptName
+set scriptName to "modern.IE VM Installer"
+set scriptVersionName to scriptName & " v0.1.1"
 
 -- Names for all VMs
 set VM_XP_IE6 to "XP - IE6"
@@ -43,6 +47,12 @@ on ApplicationIsRunning(appName)
 	return appNameIsRunning
 end ApplicationIsRunning
 
+-- Source: http://growl.info/documentation/applescript-support.php#growlisrunning
+on ApplicationBundleIsRunning(bundleID)
+	tell application "System Events" to set bundleIDIsRunning to (count of (every process whose bundle identifier is bundleID)) > 0
+	return bundleIDIsRunning
+end ApplicationBundleIsRunning
+
 on activateVirtualBox()
 	if not ApplicationIsRunning("VirtualBox") then
 		-- Open the application if it's not running, and wait a few seconds
@@ -54,6 +64,32 @@ on activateVirtualBox()
 	tell application "VirtualBox" to activate
 end activateVirtualBox
 
+-- Based on: http://growl.info/documentation/applescript-support.php#simpleNotificationSampleCode
+on GrowlAvailable()
+	if ApplicationBundleIsRunning("com.Growl.GrowlHelperApp") then
+		tell application id "com.Growl.GrowlHelperApp"
+			set the allNotificationsList to {"Install Progress Notification"}
+			set the enabledNotificationsList to {"Install Progress Notification"}
+			
+			register as application scriptName all notifications allNotificationsList default notifications enabledNotificationsList
+		end tell
+		
+		return true
+	else
+		return false
+	end if
+end GrowlAvailable
+
+on GrowlNotify(theTitle, theDescription)
+	if GrowlAvailable() then
+		tell application id "com.Growl.GrowlHelperApp"
+			close all notifications
+			
+			notify with name "Install Progress Notification" title theTitle description theDescription application name scriptName with sticky
+		end tell
+	end if
+end GrowlNotify
+
 -- Based on: http://stackoverflow.com/a/8298899/251760
 on filename(thePath)
 	set AppleScript's text item delimiters to "/"
@@ -61,7 +97,7 @@ on filename(thePath)
 end filename
 
 -- Ask user for VM
-set selectedVM to (choose from list allVMs OK button name "OK" cancel button name "Cancel" with title "modern.IE VM Installer" with prompt "Which IE VM do you want to install?")
+set selectedVM to (choose from list allVMs OK button name "OK" cancel button name "Cancel" with title scriptVersionName with prompt "Which IE VM do you want to install?")
 
 if allVMs contains selectedVM then
 	set selectedVM_URLs to {}
@@ -117,7 +153,7 @@ if allVMs contains selectedVM then
 				set selectedVM_URL_CURL_PID to ""
 			end try
 			
-			-- If the cURL process is still running
+			-- If the cURL process is still running and Growl is available
 			if selectedVM_URL_CURL_PID ≠ "" then
 				try
 					-- Get size of download so far
@@ -130,15 +166,11 @@ if allVMs contains selectedVM then
 				set selectedVM_URL_currentSizeMB to round (selectedVM_URL_currentSize / 1000 / 1000)
 				set selectedVM_URL_currentSizePercentage to round (selectedVM_URL_currentSize / selectedVM_URL_size * 100)
 				
-				try
-					-- Display progress
-					display dialog "Downloading file " & i & " of " & (count of selectedVM_URLs) & "…" & return & "Total size: " & selectedVM_URL_sizeMB & "MB" & return & "Downloaded: " & selectedVM_URL_currentSizeMB & "MB (" & selectedVM_URL_currentSizePercentage & "%)" buttons {"Cancel"} cancel button "Cancel" with title "modern.IE VM Installer" giving up after 1
-				on error
-					-- If the user pressed cancel, kill the cURL process
-					do shell script "kill " & selectedVM_URL_CURL_PID
-					set cancelled to 1
-				end try
+				-- Display progress
+				GrowlNotify("Downloading file " & i & " of " & (count of selectedVM_URLs) & "…", "Downloaded " & selectedVM_URL_currentSizeMB & "MB of " & selectedVM_URL_sizeMB & "MB (" & selectedVM_URL_currentSizePercentage & "%)")
 			end if
+			
+			delay 1
 		end repeat
 		
 		-- If the user cancelled, all remaining files will be skipped
@@ -160,9 +192,11 @@ if allVMs contains selectedVM then
 			set selectedVM_OVA_path to tempPath & selectedVM_URL_filename
 		else if ZIP_VMs contains selectedVM then
 			-- Extract the ZIP
+			GrowlNotify("Extracting ZIP file…", "")
 			set selectedVM_OVA_path to trim(do shell script "unzip -o '" & tempPath & selectedVM_URL_filename & "' -d '" & tempPath & "' | grep 'inflating:' | sed 's/inflating://g'")
 		else if SFX_VMs contains selectedVM then
 			-- 'Extract' (execute) the SFX
+			GrowlNotify("Extracting SFX file…", "")
 			do shell script "chmod +x '" & tempPath & selectedVM_URL_filename & "'"
 			set selectedVM_OVA_path to tempPath & trim(do shell script "cd '" & tempPath & "'; './" & selectedVM_URL_filename & "' | grep 'OK' | egrep 'Extracting|\\.\\.\\.' | sed 's/^\\.\\.\\.//g' | sed 's/^Extracting//g' | sed 's/\\.ova.*$/.ova/g'")
 		end if
@@ -177,6 +211,7 @@ if allVMs contains selectedVM then
 			
 			try
 				-- Import the file in VirtualBox
+				GrowlNotify("Importing OVA file into VirtualBox…", "")
 				set selectedVM_OVA_installResult to do shell script "VBoxManage import '" & selectedVM_OVA_path & "'"
 				
 				-- Check whether the installation was successful
@@ -206,14 +241,15 @@ if allVMs contains selectedVM then
 		
 		-- Was the import successful?
 		if success = 1 then
+			GrowlNotify("Installation completed!", "")
 			activateVirtualBox()
 		else
 			-- The import was not successful; show the error message
 			try
 				if errorDescription = "" then
-					display dialog errorText buttons {"OK"} cancel button "OK" with title "modern.IE VM Installer"
+					display dialog errorText buttons {"OK"} cancel button "OK" with title scriptVersionName
 				else
-					display dialog errorText default answer errorDescription buttons {"OK"} cancel button "OK" with title "modern.IE VM Installer"
+					display dialog errorText default answer errorDescription buttons {"OK"} cancel button "OK" with title scriptVersionName
 				end if
 			end try
 		end if
