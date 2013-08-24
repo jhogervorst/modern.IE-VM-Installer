@@ -1,7 +1,7 @@
 -- modern.IE VM Installer v0.1.1
 -- AppleScript to install modern.IE VMs with one click in VirtualBox for Mac.
 --
--- Copyright © 2013 Jonathan Hogervorst. All rights reserved.
+-- Copyright ¬© 2013 Jonathan Hogervorst. All rights reserved.
 -- This code is licensed under MIT license. See LICENSE for details.
 
 global scriptName
@@ -154,7 +154,7 @@ if allVMs contains selectedVM then
 			end try
 			
 			-- If the cURL process is still running and Growl is available
-			if selectedVM_URL_CURL_PID ≠ "" then
+			if selectedVM_URL_CURL_PID ¬≠ "" then
 				try
 					-- Get size of download so far
 					set selectedVM_URL_currentSize to word 1 of (do shell script "du -s -k '" & tempPath & selectedVM_URL_filename & "'") as number
@@ -167,7 +167,7 @@ if allVMs contains selectedVM then
 				set selectedVM_URL_currentSizePercentage to round (selectedVM_URL_currentSize / selectedVM_URL_size * 100)
 				
 				-- Display progress
-				GrowlNotify("Downloading file " & i & " of " & (count of selectedVM_URLs) & "…", "Downloaded " & selectedVM_URL_currentSizeMB & "MB of " & selectedVM_URL_sizeMB & "MB (" & selectedVM_URL_currentSizePercentage & "%)")
+				GrowlNotify("Downloading file " & i & " of " & (count of selectedVM_URLs) & "√â", "Downloaded " & selectedVM_URL_currentSizeMB & "MB of " & selectedVM_URL_sizeMB & "MB (" & selectedVM_URL_currentSizePercentage & "%)")
 			end if
 			
 			delay 1
@@ -192,11 +192,11 @@ if allVMs contains selectedVM then
 			set selectedVM_OVA_path to tempPath & selectedVM_URL_filename
 		else if ZIP_VMs contains selectedVM then
 			-- Extract the ZIP
-			GrowlNotify("Extracting ZIP file…", "")
+			GrowlNotify("Extracting ZIP file√â", "")
 			set selectedVM_OVA_path to trim(do shell script "unzip -o '" & tempPath & selectedVM_URL_filename & "' -d '" & tempPath & "' | grep 'inflating:' | sed 's/inflating://g'")
 		else if SFX_VMs contains selectedVM then
 			-- 'Extract' (execute) the SFX
-			GrowlNotify("Extracting SFX file…", "")
+			GrowlNotify("Extracting SFX file√â", "")
 			do shell script "chmod +x '" & tempPath & selectedVM_URL_filename & "'"
 			set selectedVM_OVA_path to tempPath & trim(do shell script "cd '" & tempPath & "'; './" & selectedVM_URL_filename & "' | grep 'OK' | egrep 'Extracting|\\.\\.\\.' | sed 's/^\\.\\.\\.//g' | sed 's/^Extracting//g' | sed 's/\\.ova.*$/.ova/g'")
 		end if
@@ -211,7 +211,7 @@ if allVMs contains selectedVM then
 			
 			try
 				-- Import the file in VirtualBox
-				GrowlNotify("Importing OVA file into VirtualBox…", "")
+				GrowlNotify("Importing OVA file into VirtualBox√â", "")
 				set selectedVM_OVA_installResult to do shell script "VBoxManage import '" & selectedVM_OVA_path & "'"
 				
 				-- Check whether the installation was successful
