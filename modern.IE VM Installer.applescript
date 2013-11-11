@@ -1,4 +1,4 @@
--- modern.IE VM Installer v0.1.1
+-- modern.IE VM Installer v0.1.2
 -- AppleScript to install modern.IE VMs with one click in VirtualBox for Mac.
 --
 -- Copyright (C) 2013 Jonathan Hogervorst. All rights reserved.
@@ -6,7 +6,7 @@
 
 global scriptName
 set scriptName to "modern.IE VM Installer"
-set scriptVersionName to scriptName & " v0.1.1"
+set scriptVersionName to scriptName & " v0.1.2"
 
 -- Names for all VMs
 set VM_XP_IE6 to "XP - IE6"
