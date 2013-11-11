@@ -1,7 +1,7 @@
 -- modern.IE VM Installer v0.1.1
 -- AppleScript to install modern.IE VMs with one click in VirtualBox for Mac.
 --
--- Copyright © 2013 Jonathan Hogervorst. All rights reserved.
+-- Copyright (C) 2013 Jonathan Hogervorst. All rights reserved.
 -- This code is licensed under MIT license. See LICENSE for details.
 
 global scriptName
@@ -67,26 +67,29 @@ end activateVirtualBox
 -- Based on: http://growl.info/documentation/applescript-support.php#simpleNotificationSampleCode
 on GrowlAvailable()
 	if ApplicationBundleIsRunning("com.Growl.GrowlHelperApp") then
-		tell application id "com.Growl.GrowlHelperApp"
-			set the allNotificationsList to {"Install Progress Notification"}
-			set the enabledNotificationsList to {"Install Progress Notification"}
+		try
+			tell application id "com.Growl.GrowlHelperApp"
+				set the allNotificationsList to {"Install Progress Notification"}
+				set the enabledNotificationsList to {"Install Progress Notification"}
+				
+				register as application scriptName all notifications allNotificationsList default notifications enabledNotificationsList
+			end tell
 			
-			register as application scriptName all notifications allNotificationsList default notifications enabledNotificationsList
-		end tell
-		
-		return true
-	else
-		return false
+			return true
+		end try
 	end if
+	
+	return false
 end GrowlAvailable
 
 on GrowlNotify(theTitle, theDescription)
 	if GrowlAvailable() then
-		tell application id "com.Growl.GrowlHelperApp"
-			close all notifications
-			
-			notify with name "Install Progress Notification" title theTitle description theDescription application name scriptName with sticky
-		end tell
+		try
+			tell application id "com.Growl.GrowlHelperApp"
+				close all notifications
+				notify with name "Install Progress Notification" title theTitle description theDescription application name scriptName with sticky
+			end tell
+		end try
 	end if
 end GrowlNotify
 
