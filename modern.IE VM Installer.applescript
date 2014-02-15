@@ -15,16 +15,16 @@ set VM_Vista_IE7 to "Vista - IE7"
 set VM_Win7_IE8 to "Win7 - IE8"
 set VM_Win7_IE9 to "Win7 - IE9"
 set VM_Win7_IE10 to "Win7 - IE10"
-set VM_Win7_IE11 to "Win7 - IE11 RP (September 2013)"
+set VM_Win7_IE11 to "Win7 - IE11"
 set VM_Win8_IE10 to "Win8 - IE10"
-set VM_Win81_IE11 to "Win8.1 - IE11 Preview"
+set VM_Win81_IE11 to "Win8.1 - IE11"
 
 set allVMs to {VM_XP_IE6, VM_XP_IE8, VM_Vista_IE7, VM_Win7_IE8, VM_Win7_IE9, VM_Win7_IE10, VM_Win7_IE11, VM_Win8_IE10, VM_Win81_IE11}
 
 -- VM file types (OVA, OVA in ZIPs, OVA in SFXs)
-set OVA_VMs to {VM_XP_IE8}
-set ZIP_VMs to {VM_XP_IE6}
-set SFX_VMs to {VM_Vista_IE7, VM_Win7_IE8, VM_Win7_IE9, VM_Win7_IE10, VM_Win7_IE11, VM_Win8_IE10, VM_Win81_IE11}
+set OVA_VMs to {}
+set ZIP_VMs to {}
+set SFX_VMs to {VM_XP_IE6, VM_XP_IE8, VM_Vista_IE7, VM_Win7_IE8, VM_Win7_IE9, VM_Win7_IE10, VM_Win7_IE11, VM_Win8_IE10, VM_Win81_IE11}
 
 -- Based on: http://macscripter.net/viewtopic.php?id=18519
 on trim(theString)
@@ -107,23 +107,23 @@ if allVMs contains selectedVM then
 	
 	-- Determine file URLs based on chosen VM
 	if (selectedVM = {VM_XP_IE6}) then
-		set selectedVM_URLs to {"https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE6_WinXP.ova.zip"}
+		set selectedVM_URLs to {"https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE6_WinXP/Mac/IE6.WinXP.For.MacVirtualBox.sfx"}
 	else if (selectedVM = {VM_XP_IE8}) then
-		set selectedVM_URLs to {"https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE8_XP/IE8.XP.For.MacVirtualBox.ova"}
+		set selectedVM_URLs to {"https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE8_WinXP/Mac/IE8.WinXP.For.MacVirtualBox.part1.sfx", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE8_WinXP/Mac/IE8.WinXP.For.MacVirtualBox.part2.rar"}
 	else if (selectedVM = {VM_Vista_IE7}) then
-		set selectedVM_URLs to {"https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE7_Vista/IE7.Vista.For.MacVirtualBox.part1.sfx", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE7_Vista/IE7.Vista.For.MacVirtualBox.part2.rar", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE7_Vista/IE7.Vista.For.MacVirtualBox.part3.rar", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE7_Vista/IE7.Vista.For.MacVirtualBox.part4.rar", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE7_Vista/IE7.Vista.For.MacVirtualBox.part5.rar"}
+		set selectedVM_URLs to {"https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE7_Vista/Mac/IE7.Vista.For.MacVirtualBox.part1.sfx", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE7_Vista/Mac/IE7.Vista.For.MacVirtualBox.part2.rar", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE7_Vista/Mac/IE7.Vista.For.MacVirtualBox.part3.rar", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE7_Vista/Mac/IE7.Vista.For.MacVirtualBox.part4.rar"}
 	else if (selectedVM = {VM_Win7_IE8}) then
-		set selectedVM_URLs to {"https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE8_Win7/IE8.Win7.For.MacVirtualBox.part1.sfx", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE8_Win7/IE8.Win7.For.MacVirtualBox.part2.rar", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE8_Win7/IE8.Win7.For.MacVirtualBox.part3.rar", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE8_Win7/IE8.Win7.For.MacVirtualBox.part4.rar", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE8_Win7/IE8.Win7.For.MacVirtualBox.part5.rar", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE8_Win7/IE8.Win7.For.MacVirtualBox.part6.rar"}
+		set selectedVM_URLs to {"https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE8_Win7/Mac/IE8.Win7.For.MacVirtualBox.part1.sfx", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE8_Win7/Mac/IE8.Win7.For.MacVirtualBox.part2.rar", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE8_Win7/Mac/IE8.Win7.For.MacVirtualBox.part3.rar", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE8_Win7/Mac/IE8.Win7.For.MacVirtualBox.part4.rar"}
 	else if (selectedVM = {VM_Win7_IE9}) then
-		set selectedVM_URLs to {"https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE9_Win7/IE9.Win7.For.MacVirtualBox.part1.sfx", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE9_Win7/IE9.Win7.For.MacVirtualBox.part2.rar", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE9_Win7/IE9.Win7.For.MacVirtualBox.part3.rar", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE9_Win7/IE9.Win7.For.MacVirtualBox.part4.rar", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE9_Win7/IE9.Win7.For.MacVirtualBox.part5.rar"}
+		set selectedVM_URLs to {"https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE9_Win7/Mac/IE9.Win7.For.MacVirtualBox.part1.sfx", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE9_Win7/Mac/IE9.Win7.For.MacVirtualBox.part2.rar", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE9_Win7/Mac/IE9.Win7.For.MacVirtualBox.part3.rar", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE9_Win7/Mac/IE9.Win7.For.MacVirtualBox.part4.rar"}
 	else if (selectedVM = {VM_Win7_IE10}) then
-		set selectedVM_URLs to {"https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE10_Win7/IE10.Win7.For.MacVirtualBox.part1.sfx", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE10_Win7/IE10.Win7.For.MacVirtualBox.part2.rar", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE10_Win7/IE10.Win7.For.MacVirtualBox.part3.rar", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE10_Win7/IE10.Win7.For.MacVirtualBox.part4.rar"}
+		set selectedVM_URLs to {"https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE10_Win7/Mac/IE10.Win7.For.MacVirtualBox.part1.sfx", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE10_Win7/Mac/IE10.Win7.For.MacVirtualBox.part2.rar", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE10_Win7/Mac/IE10.Win7.For.MacVirtualBox.part3.rar", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE10_Win7/Mac/IE10.Win7.For.MacVirtualBox.part4.rar"}
 	else if (selectedVM = {VM_Win7_IE11}) then
-		set selectedVM_URLs to {"https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE11_Win7_2/IE11.Win7.For.MacVirtualBox.part1.sfx", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE11_Win7_2/IE11.Win7.For.MacVirtualBox.part2.rar", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE11_Win7_2/IE11.Win7.For.MacVirtualBox.part3.rar", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE11_Win7_2/IE11.Win7.For.MacVirtualBox.part4.rar", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE11_Win7_2/IE11.Win7.For.MacVirtualBox.part5.rar"}
+		set selectedVM_URLs to {"https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE11_Win7/Mac/IE11.Win7.For.MacVirtualBox.part1.sfx", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE11_Win7/Mac/IE11.Win7.For.MacVirtualBox.part2.rar", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE11_Win7/Mac/IE11.Win7.For.MacVirtualBox.part3.rar", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE11_Win7/Mac/IE11.Win7.For.MacVirtualBox.part4.rar"}
 	else if (selectedVM = {VM_Win8_IE10}) then
-		set selectedVM_URLs to {"https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE10_Win8/IE10.Win8.For.MacVirtualBox.part1.sfx", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE10_Win8/IE10.Win8.For.MacVirtualBox.part2.rar", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE10_Win8/IE10.Win8.For.MacVirtualBox.part3.rar"}
+		set selectedVM_URLs to {"https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE10_Win8/Mac/IE10.Win8.For.MacVirtualBox.part1.sfx", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE10_Win8/Mac/IE10.Win8.For.MacVirtualBox.part2.rar", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE10_Win8/Mac/IE10.Win8.For.MacVirtualBox.part3.rar", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE10_Win8/Mac/IE10.Win8.For.MacVirtualBox.part4.rar", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE10_Win8/Mac/IE10.Win8.For.MacVirtualBox.part5.rar"}
 	else if (selectedVM = {VM_Win81_IE11}) then
-		set selectedVM_URLs to {"https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE11_Win81/IE11.Win8.1Preview.For.MacVirtualBox.part1.sfx", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE11_Win81/IE11.Win8.1Preview.For.MacVirtualBox.part2.rar", "https://az412801.vo.msecnd.net/vhd/IEKitV1_Final/VirtualBox/OSX/IE11_Win81/IE11.Win8.1Preview.For.MacVirtualBox.part3.rar"}
+		set selectedVM_URLs to {"https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE11_Win8.1/Mac/IE11.Win8.1.For.MacVirtualBox.part1.sfx", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE11_Win8.1/Mac/IE11.Win8.1.For.MacVirtualBox.part2.rar", "https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE11_Win8.1/Mac/IE11.Win8.1.For.MacVirtualBox.part3.rar"}
 	end if
 	
 	set tempPath to POSIX path of (path to temporary items)
